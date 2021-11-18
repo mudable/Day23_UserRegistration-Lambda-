@@ -33,6 +33,13 @@ public class UserRegistration {
 			return userReg.Email(EmailId);
 		};
 		System.out.println(Email.validate());
+		Validation MobNum = () -> {
+			System.out.println("Enter mobile number ::");
+			String n = sc.next();
+			return userReg.Number(n);
+		};
+		System.out.println(MobNum.validate());
+
 	}
 
 	private boolean Name(String firstName) {
@@ -50,9 +57,15 @@ public class UserRegistration {
 	}
 
 	private boolean Email(String email) {
-		String regex ="^[a-z0-9]{3,}+([_+-.][a-z0-9]{3,}+)*@[a-z0-9]+.[a-z]{2,3}+(.[a-z]{2,3}){0,1}$";
+		String regex = "^[a-z0-9]{3,}+([_+-.][a-z0-9]{3,}+)*@[a-z0-9]+.[a-z]{2,3}+(.[a-z]{2,3}){0,1}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
+	private boolean Number(String number) {
+		String regex = "91\\s[0-9]{10}";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(number);
 		return matcher.matches();
 	}
 }
