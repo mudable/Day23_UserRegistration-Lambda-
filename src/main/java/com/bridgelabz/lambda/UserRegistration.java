@@ -20,6 +20,13 @@ public class UserRegistration {
 			return userReg.Name(firstName);
 		};
 		System.out.println(FirstName.validate());
+
+		Validation LastName = () -> {
+			System.out.println("Enter Last name :: ");
+			String lastName = sc.next();
+			return userReg.Name(lastName);
+		};
+		System.out.println(LastName.validate());
 	}
 
 	private boolean Name(String firstName) {
@@ -27,5 +34,12 @@ public class UserRegistration {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(firstName);
 		return matcher.matches();
-	
+	}
+
+	private boolean LastName(String lastName) {
+		String regex = "^[A-Z]{1}[a-z]{3,}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(lastName);
+		return matcher.matches();
+	}
 }
