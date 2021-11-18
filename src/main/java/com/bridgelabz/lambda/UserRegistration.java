@@ -39,6 +39,12 @@ public class UserRegistration {
 			return userReg.Number(n);
 		};
 		System.out.println(MobNum.validate());
+		Validation Password = () -> {
+			System.out.println("Please Enter password :: ");
+			String password = sc.next();
+			return userReg.Password(password);
+		};
+		System.out.println(Password.validate());
 
 	}
 
@@ -62,10 +68,18 @@ public class UserRegistration {
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 	}
+
 	private boolean Number(String number) {
 		String regex = "91\\s[0-9]{10}";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(number);
+		return matcher.matches();
+	}
+
+	private boolean Password(String pass) {
+		String regex = "^(?=.*[0-9])(?=[^@#$%^&+=]*[@#$%^&+=][^@#$%^&+=]*$)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(pass);
 		return matcher.matches();
 	}
 }
