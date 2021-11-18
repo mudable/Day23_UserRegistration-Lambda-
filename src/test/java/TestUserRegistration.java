@@ -1,101 +1,43 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import com.bridgelabz.lambda.UserRegistration;
 
-class TestUserRegistration {
-	UserRegistration userRegistration = new UserRegistration();
+import java.util.Arrays;
+import java.util.Collection;
 
-	@Test
-	public void givenFirstName_WhenInFormat_ShouldReturnTrue() {
-		boolean result = userRegistration.Name("Shilpa");
-		Assert.assertEquals(true, result);
+@RunWith(Parameterized.class)
+public class TestUserRegistration {
+
+	private boolean expected_Result;
+	private String email;
+	private UserRegistration user;
+
+	public TestUserRegistration(boolean expected_Result, String email) {
+		this.expected_Result = expected_Result;
+		this.email = email;
+	}
+
+	@Before
+	public void initialize() {
+		user = new UserRegistration();
+	}
+
+	@Parameterized.Parameters
+	public static Collection input() {
+		return Arrays.asList(new Object[][] { { true, "abc.zxy@yahoo.com.in" }, { true, "abc.100@yahoo.com" },
+				{ true, "abc111@abc.com" }, { true, "abc-100@yahoo.net" }, { true, "abc.100@abc.com.au" },
+				 { true, "abc@.com.my" }, { false, "abc()*@gmail.com" },
+				{ false, ".abc@abc.com" }, { false, ".abc@abc.com" } });
 	}
 
 	@Test
-	public void givenFirstName_WhenOurOfFormat_ShouldReturnFlase() {
-		boolean result = userRegistration.Name("shilpa");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenLastName_WhenInFormat_ShouldReturnTrue() {
-		boolean result = userRegistration.LastName("Mudable");
-		Assert.assertEquals(true, result);
-	}
-
-	@Test
-	public void givenLastName_WhenOurOfFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.LastName("mudable");
-		Assert.assertEquals(false, result);
-
-	}
-
-	@Test
-	public void givenEmail_WhenInFormat_ShouldReturnTrue() {
-		boolean result = userRegistration.Email("abc@gmail.com.com");
-		Assert.assertEquals(true, result);
-	}
-
-	@Test
-	public void givenEmail_WhenOurOfFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.Email("abc()*@gmail.com");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenPhoneNumber_WhenInFormat_ShouldReturnTrue() {
-		boolean result = userRegistration.Number("91 9604315270");
-		Assert.assertEquals(true, result);
-	}
-
-	@Test
-	public void givenPhoneNumber_WhenOurOfFormat_ShouldReturnFlase() {
-		boolean result = userRegistration.Number("+91 9604315270");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenPassword_WhenInFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.Password("abcdegfhij");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenPassword_WhenOurOfFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.Password("abcd");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenPasswordRule2_WhenOurOfFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.Password("abcdefghij");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenEmail3_WhenInFormat_ShouldReturnTrue() {
-		boolean result = userRegistration.Email("abc.100@abc.com.au");
-		Assert.assertEquals(true, result);
-	}
-
-	@Test
-	public void givenEmail3_WhenOurOfFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.Email("abc()*@gmail.com");
-		Assert.assertEquals(false, result);
-	}
-
-	@Test
-	public void givenEmail4_WhenInFormat_ShouldReturnTrue() {
-		boolean result = userRegistration.Email("abc@1.com");
-		Assert.assertEquals(true, result);
-	}
-
-	@Test
-	public void givenEmail4_WhenOurOfFormat_ShouldReturnFalse() {
-		boolean result = userRegistration.Email("aabc.@gmail.com");
-		Assert.assertEquals(false, result);
+	public void givenAEmailPatternWhenMatchedShouldReturnTrue() {
+		Assert.assertEquals(expected_Result, user.Email(email));
 	}
 }
